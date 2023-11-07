@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { NNumberAnimation } from "naive-ui";
 import { logger } from "@/utils";
-
-logger("test");
+import { useCounterStore } from '@/store/index'
+// 可以在组件中的任意位置访问 `store` 变量 ✨
+const store = useCounterStore()
+logger('aa');
 </script>
 
 <template>
@@ -10,4 +12,5 @@ logger("test");
   <h1 class="text-3xl bg-sky-500 text-amber-100 font-bold underline">
     Hello world!
   </h1>
+  <div @click="store.increment">{{ store.count }}</div>
 </template>
