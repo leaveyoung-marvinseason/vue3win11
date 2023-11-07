@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NNumberAnimation } from "naive-ui";
 import { logger } from "@/utils";
-import { useCounterStore } from '@/store/index'
+import { useCounterStore } from '@/store'
 // 可以在组件中的任意位置访问 `store` 变量 ✨
 const store = useCounterStore()
 logger('aa');
