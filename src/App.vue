@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { logger } from "@/utils";
 
-logger("aaa");
+logger("test");
 </script>
 
 <template>
