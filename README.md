@@ -27,18 +27,39 @@ vite4
 
 ```txt
 ├── src
+│   ├── main.ts
+│   ├── App.vue
 │   ├── api
 │   ├── assets
 │   ├── components
+        ├── index-comp
+            ├── index.vue
+│   ├── constants
+│   ├── enums
+│   ├── directives
 │   ├── config
 │   ├── hooks
 │   ├── layout
 │   ├── locales
-│   ├── pages
 │   ├── plugins
 │   ├── router
 │   ├── store
 │   ├── types
 │   ├── utils
-│   ├── vite.config
+│   ├── pages
+│        ├── index
+│            ├── index.vue
+│            ├── index-detail.vue
+├── public
+├── index.html
+├── vite.config
+├── tsconfig.json
+├── package.json
+├── README.md
+├── .gitignore
+├── .prettierrc
+├── .prettierignore
+├── pnpm-lock.yaml
+├── tsconfig.node.json
+├── tsconfig.json
 ```
