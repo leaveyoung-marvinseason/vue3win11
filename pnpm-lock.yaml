@@ -18,7 +18,7 @@ dependencies:
     specifier: ^3.3.4
     version: registry.npmmirror.com/vue@3.3.7(typescript@5.2.2)
   vue-router:
-    specifier: '4'
+    specifier: ^4.2.5
     version: registry.npmmirror.com/vue-router@4.2.5(vue@3.3.7)
 
 devDependencies:
