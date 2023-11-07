@@ -62,4 +62,7 @@ vite4
 ├── pnpm-lock.yaml
 ├── tsconfig.node.json
 ├── tsconfig.json
+├── tailwind.config.ts
+├── postcss.config.ts
+
 ```
