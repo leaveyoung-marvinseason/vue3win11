@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { NNumberAnimation } from "naive-ui";
-import { logger } from "@/utils";
+console.log('1');
 
-logger("test");
 </script>
 
 <template>
-  <n-number-animation ref="numberAnimationInstRef" :from="0" :to="12039" />
-  <h1 class="text-3xl bg-sky-500 text-amber-100 font-bold underline">
-    Hello world!
-  </h1>
+  <div class="flex flex-col">
+    <div class="flex gap-2">
+      <RouterLink class="text-blue-500 underline" to="/index">Index</RouterLink>
+      <RouterLink class="text-blue-500 underline" to="/home">Home</RouterLink>
+    </div>
+    <RouterView />
+  </div>
 </template>
