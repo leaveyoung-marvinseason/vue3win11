@@ -1,14 +1,22 @@
 <script setup lang="ts">
-console.log('1');
-
+import Layer from '@/components/layer/index.vue'
+import Image from '@/components/image/index.vue'
+import bgImage from '@/statics/assets/wallpaper/dark/img0.jpg'
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <div class="flex gap-2">
-      <RouterLink class="text-blue-500 underline" to="/index">Index</RouterLink>
-      <RouterLink class="text-blue-500 underline" to="/home">Home</RouterLink>
-    </div>
-    <RouterView />
+  <div class="flex flex-col w-full h-screen">
+    <!-- 背景层 -->
+    <Layer :z-index="8">
+      <template #default="">
+        <Image :src="bgImage"/>
+      </template>
+    </Layer>
+    <!-- app层 -->
+    <Layer :z-index="9">
+      <template #default="">
+        <div class="opacity-90 text-amber-100">asas</div>
+      </template>
+    </Layer>
   </div>
 </template>
