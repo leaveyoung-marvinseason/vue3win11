@@ -4,9 +4,10 @@ import Image from '@/components/image/index.vue'
 import Panel from '@/components/panel/index.vue'
 import unLoginBg from '@/statics/assets/wallpaper/win11Dark.jpg'
 import loginBg from '@/statics/assets/wallpaper/win11Light.jpg'
-import { ref } from 'vue'
+import { useAuthStore } from '@/store'
+import { storeToRefs } from 'pinia'
 
-const isLogin = ref(true)
+const { isLogin } = storeToRefs(useAuthStore())
 
 </script>
 

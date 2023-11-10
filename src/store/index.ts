@@ -1,5 +1,5 @@
 import { createPinia } from 'pinia'
-export * from './store'
+export * from './user'
 
 const pinia = createPinia()
 

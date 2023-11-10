@@ -10,6 +10,6 @@ export const logout = () => {
     sessionStorage.removeItem(TOKEN)
 }
 
-export const isLogin = () => {
+export const getToken = () => {
     return sessionStorage.getItem(TOKEN)
 }

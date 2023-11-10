@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { login } from "@/utils/auth";
+import { useAuthStore } from "@/store";
 import { NButton } from "naive-ui";
+const { login } = useAuthStore()
 </script>
 
 <template>
-  <NButton @click="login('1', '2')">login</NButton>
+  <NButton @click="login">login</NButton>
 </template>
 
 <style scoped></style>
