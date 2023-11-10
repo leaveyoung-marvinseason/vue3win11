@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import Layer from '@/components/layer/index.vue'
 import Image from '@/components/image/index.vue'
-import bgImage from '@/statics/assets/wallpaper/dark/img0.jpg'
+import Panel from '@/components/panel/index.vue'
+import unLoginBg from '@/statics/assets/wallpaper/ThemeA/img0.jpg'
+import loginBg from '@/statics/assets/wallpaper/win11Light.jpg'
+import { useAuthStore } from '@/store'
+import { storeToRefs } from 'pinia'
+
+const { isLogin } = storeToRefs(useAuthStore())
+
 </script>
 
 <template>
@@ -9,13 +16,13 @@ import bgImage from '@/statics/assets/wallpaper/dark/img0.jpg'
     <!-- 背景层 -->
     <Layer :z-index="8">
       <template #default="">
-        <Image :src="bgImage"/>
+        <Image :src="isLogin ? loginBg : unLoginBg" />
       </template>
     </Layer>
-    <!-- app层 -->
+    <!-- 应用入口层 -->
     <Layer :z-index="9">
       <template #default="">
-        <div class="opacity-90 text-amber-100">asas</div>
+        <Panel />
       </template>
     </Layer>
   </div>
