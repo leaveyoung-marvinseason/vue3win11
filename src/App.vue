@@ -2,7 +2,7 @@
 import Layer from '@/components/layer/index.vue'
 import Image from '@/components/image/index.vue'
 import Panel from '@/components/panel/index.vue'
-import unLoginBg from '@/statics/assets/wallpaper/win11Dark.jpg'
+import unLoginBg from '@/statics/assets/wallpaper/ThemeA/img0.jpg'
 import loginBg from '@/statics/assets/wallpaper/win11Light.jpg'
 import { useAuthStore } from '@/store'
 import { storeToRefs } from 'pinia'
