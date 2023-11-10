@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isLogin = ref(!!token);
     const login = async () => {
         isLogin.value = true
-        sessionStorage.setItem(TOKEN, 'token==')
+        // sessionStorage.setItem(TOKEN, 'token==')
         return Promise.resolve(true)
     }
 

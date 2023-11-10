@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.16",
+    "gsap": "^3.12.2",
     "pinia": "^2.1.7",
     "postcss": "^8.4.31",
     "vue": "^3.3.4",
