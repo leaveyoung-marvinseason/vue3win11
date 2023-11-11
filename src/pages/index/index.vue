@@ -16,7 +16,7 @@ const apps = inject(APPS)
 </script>
 
 <template>
-    <div>
+    <div class="h-full flex flex-col gap-2">
         <App v-for="(app, appIndex) in apps" :key="appIndex" :app="app" @click-app="handleClickApp(app)" />
     </div>
 </template>
