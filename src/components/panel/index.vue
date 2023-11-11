@@ -5,10 +5,10 @@ import Desktop from './desktop.vue';
 
 <template>
   <div class="h-full flex flex-col">
-    <Desktop class="flex-1">
+    <Desktop>
       <RouterView />
     </Desktop>
-    <TaskBar class="h-12 bg-slate-50 opacity-80">bar</TaskBar>
+    <TaskBar >bar</TaskBar>
   </div>
 </template>
 

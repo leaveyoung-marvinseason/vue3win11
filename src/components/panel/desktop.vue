@@ -4,13 +4,11 @@ import gsap from "gsap";
 const handleBeforeEnter = (el: Element) => {
     // @ts-ignore
     el.style.opacity = '0'
-    // @ts-ignore
-    el.style.transform = 'translateY(100px)'
 }
 
 const handleEnter = (el: Element) => {
     gsap.to(el, {
-        duration: 0.8,
+        duration: 0.5,
         y: 0,
         opacity: 1,
     })
@@ -18,7 +16,9 @@ const handleEnter = (el: Element) => {
 </script>
 
 <template>
-    <transition @before-enter="handleBeforeEnter" @enter="handleEnter">
-        <slot></slot>
-    </transition>
+    <div class="flex-1">
+        <transition @before-enter="handleBeforeEnter" @enter="handleEnter">
+            <slot></slot>
+        </transition>
+    </div>
 </template>
