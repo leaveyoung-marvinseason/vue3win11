@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import TaskBar from './task-bar.vue';
 import Desktop from './desktop.vue';
+import AppDialog from '@/components/app-dialog/index.vue';
+
 </script>
 
 <template>
@@ -8,8 +10,9 @@ import Desktop from './desktop.vue';
     <Desktop>
       <RouterView />
     </Desktop>
-    <TaskBar >bar</TaskBar>
+    <TaskBar>bar</TaskBar>
   </div>
+  <AppDialog />
 </template>
 
 <style scoped></style>
