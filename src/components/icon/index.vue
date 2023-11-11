@@ -34,7 +34,7 @@ onBeforeMount(async () => {
 </script>
  
 <template>
-    <NImage @click="handleClick" :width="props.size" :height="props.size" :src="lazyImage"></NImage>
+    <NImage lazy preview-disabled @click="handleClick" :width="props.size" :height="props.size" :src="lazyImage"></NImage>
 </template>
  
 <style scoped></style>
