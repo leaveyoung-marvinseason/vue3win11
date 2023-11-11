@@ -1,26 +1,13 @@
 <script setup lang="ts">
-import gsap from "gsap";
-
-const handleBeforeEnter = (el: HTMLElement) => {
-  el.style.opacity = '0'
-  el.style.transform = 'translateY(100px)'
-}
-
-const handleEnter = (el: HTMLElement) => {
-  gsap.to(el, {
-    duration: 0.8,
-    y: 0,
-    opacity: 1,
-  })
-}
 </script>
 
 <template>
-  <!-- @vue-ignore -->
-  <transition @before-enter="handleBeforeEnter" @enter="handleEnter" @before-leave="handleBeforeLeave"
-    @leave="handleLeave">
-    <RouterView />
-  </transition>
+  <div class="h-full flex flex-col">
+    <Content class="flex-1">
+      <RouterView />
+    </Content>
+    <Bar class="h-12 bg-slate-50 opacity-80">bar</Bar>
+  </div>
 </template>
 
 <style scoped></style>
