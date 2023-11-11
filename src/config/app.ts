@@ -20,3 +20,16 @@ export const apps: AppProps[] = [
         onClick: console.log
     },
 ]
+
+export const barApps: AppProps[] = [
+    {
+        id: 1,
+        label: '',
+        icon: 'store',
+    },
+    {
+        id: 2,
+        label: '',
+        icon: 'explorer',
+    },
+] 

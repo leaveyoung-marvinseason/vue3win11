@@ -28,7 +28,7 @@ const { isLogin } = storeToRefs(useAuthStore())
           <Desktop>
             <RouterView />
           </Desktop>
-          <TaskBar v-if="isLogin">bar</TaskBar>
+          <TaskBar v-if="isLogin"></TaskBar>
         </div>
       </template>
     </Layer>
