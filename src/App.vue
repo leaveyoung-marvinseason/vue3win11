@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Layer from '@/components/layer/index.vue'
-import Image from '@/components/image/index.vue'
 import TaskBar from '@/components/task-bar/index.vue';
 import Desktop from '@/components/desktop/index.vue';
 import AppDialog from '@/components/app-dialog/index.vue';
@@ -8,6 +7,7 @@ import unLoginBg from '@/statics/assets/images/wallpaper/ThemeA/img0.jpg'
 import loginBg from '@/statics/assets/images/wallpaper/win11Light.jpg'
 import { useAuthStore } from '@/store'
 import { storeToRefs } from 'pinia'
+import { NImage } from 'naive-ui';
 
 const { isLogin } = storeToRefs(useAuthStore())
 
@@ -18,7 +18,7 @@ const { isLogin } = storeToRefs(useAuthStore())
     <!-- 背景层 -->
     <Layer :z-index="8">
       <template v-slot>
-        <Image :src="isLogin ? loginBg : unLoginBg" />
+        <NImage :src="isLogin ? loginBg : unLoginBg" />
       </template>
     </Layer>
     <!-- 应用入口层 -->

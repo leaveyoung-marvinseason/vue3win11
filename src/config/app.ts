@@ -4,21 +4,19 @@ export const apps: AppProps[] = [
     {
         id: 1,
         label: '回收站',
+        icon: 'bin0',
         onClick: console.log
     },
     {
         id: 2,
-        label: '回收站2',
+        icon: 'edge',
+        label: 'Edge',
         onClick: console.log
     },
     {
         id: 3,
-        label: '回收站3',
+        icon: 'code',
+        label: 'Visual Studio Code',
         onClick: console.log
     },
-    {
-        id: 4,
-        label: '回收站4',
-        onClick: console.log
-    }
 ]
