@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import TaskBar from './task-bar.vue';
+import Desktop from './desktop.vue';
 </script>
 
 <template>
   <div class="h-full flex flex-col">
-    <Content class="flex-1">
+    <Desktop class="flex-1">
       <RouterView />
-    </Content>
-    <Bar class="h-12 bg-slate-50 opacity-80">bar</Bar>
+    </Desktop>
+    <TaskBar class="h-12 bg-slate-50 opacity-80">bar</TaskBar>
   </div>
 </template>
 
