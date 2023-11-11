@@ -7,10 +7,16 @@ import { NImage } from 'naive-ui';
 import { onBeforeMount, ref } from 'vue';
 const props = withDefaults(defineProps<{
     name: string,
-    size: number
+    size?: number
 }>(), {
     size: 40
 })
+
+const emit = defineEmits<{
+    click: []
+}>()
+
+const handleClick = () => emit('click')
 
 const lazyImage = ref(null)
 
@@ -28,7 +34,7 @@ onBeforeMount(async () => {
 </script>
  
 <template>
-    <NImage :width="props.size" :height="props.size" :src="lazyImage"></NImage>
+    <NImage @click="handleClick" :width="props.size" :height="props.size" :src="lazyImage"></NImage>
 </template>
  
 <style scoped></style>

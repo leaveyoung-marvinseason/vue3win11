@@ -5,9 +5,12 @@
 <script setup lang='ts'>
 import { AppProps } from '@/types/app';
 import Icon from '@/components/icon/index.vue'
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   app: AppProps,
-}>();
+  size?: number
+}>(), {
+  size: 40
+})
 
 
 const emit = defineEmits<{
@@ -21,9 +24,9 @@ const handleClick = () => {
 </script>
  
 <template>
-  <div @click="handleClick" class="flex flex-col items-center gap-2 w-20 p-2 cursor-pointer">
-    <Icon :name="props.app.icon" />
-    <span class="text-white text-xs break-all">{{ props.app.label }}</span>
+  <div class="flex w-20 flex-col items-center gap-2 inline-block">
+    <Icon class="cursor-pointer" @click="handleClick" :name="props.app.icon" :size="props.size"/>
+    <span @click="handleClick" class="text-white text-xs break-all">{{ props.app.label }}</span>
   </div>
 </template>
  
