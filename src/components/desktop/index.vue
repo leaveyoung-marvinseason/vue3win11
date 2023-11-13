@@ -17,8 +17,10 @@ const handleEnter = (el: Element) => {
 
 <template>
     <div class="flex-1">
-        <transition @before-enter="handleBeforeEnter" @enter="handleEnter">
-            <slot></slot>
+      <RouterView v-slot="{ Component }" @before-enter="handleBeforeEnter" @enter="handleEnter">
+        <transition>
+          <component :is="Component"></component>
         </transition>
+      </RouterView>
     </div>
 </template>
