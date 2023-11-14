@@ -9,7 +9,6 @@ export const useDialogStore = defineStore("dialog", () => {
   // dialog list by click order
   const dialogListHead: DialogNodeType = {
     id: -1,
-    hide: true,
     next: null
   };
   const addDialog = (dialog: DialogProps) => {
@@ -64,7 +63,6 @@ export const useDialogStore = defineStore("dialog", () => {
     if (!target) {
       dialogListHead.next = {
         id,
-        hide: false,
         // zIndex: FOCUS_DIALOG_Z_INDEX,
         next: dialogListHead.next
       };
