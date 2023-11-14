@@ -57,19 +57,19 @@ export const useDialogStore = defineStore("dialog", () => {
     // find existed dialog in list
     const { pointer: preTarget, target } = findExistDialogById(id);
 
-    if (dialogListHead.next) {
-      dialogListHead.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
-    }
+    // if (dialogListHead.next) {
+    //   dialogListHead.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
+    // }
 
     if (!target) {
       dialogListHead.next = {
         id,
         hide: false,
-        zIndex: FOCUS_DIALOG_Z_INDEX,
+        // zIndex: FOCUS_DIALOG_Z_INDEX,
         next: dialogListHead.next
       };
     } else {
-      target.zIndex = FOCUS_DIALOG_Z_INDEX;
+      // target.zIndex = FOCUS_DIALOG_Z_INDEX;
 
       preTarget.next = target.next;
       target.next = dialogListHead.next;
