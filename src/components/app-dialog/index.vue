@@ -4,20 +4,33 @@
 -->
 <script setup lang="ts">
 import { DialogProps } from "@/types/dialog.ts";
+import { Ref, toRaw, unref } from "vue";
+import { random0_9 } from "@/utils";
 
-const props = defineProps<{
+const { dialog } = defineProps<{
   dialog: DialogProps
 }>();
 
-const handleClose = () => {
+const emit = defineEmits<{
+  click: [DialogProps],
+  close: [DialogProps]
+}>();
 
+const handleClose = (dialog: DialogProps) => {
+  emit('close', toRaw(dialog))
+};
+
+const handleClick = (dialog: DialogProps) => {
+  emit("click", toRaw(dialog));
 };
 
 </script>
 
 <template>
-  <div class="absolute w-6 h-10" :style="{zIndex: props.dialog.zIndex}">
-    {{ props.dialog.id }}
+  <div class="absolute w-60 h-60 bg-sky-500 opacity-60" @click="handleClick(dialog)"
+       :style="{zIndex: dialog.zIndex, left: dialog.left + 'px', top: dialog.top + 'px'}">
+    <button @click="handleClose(dialog)">close</button>
+    {{ dialog.id }}
   </div>
 </template>
 
