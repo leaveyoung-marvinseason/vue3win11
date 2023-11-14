@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import App from '@/components/app/index.vue';
+import WinApp from '@/components/win-app/index.vue';
 import { useAppStore } from '@/store/app';
 import { AppProps } from '@/types/app';
 import { APPS, FOCUS_DIALOG_Z_INDEX } from "@/constants";
@@ -24,7 +24,7 @@ const apps = inject(APPS)
 
 <template>
     <div class="h-full flex flex-col gap-4 p-2 pt-4 pb-4">
-        <App v-for="(app, appIndex) in apps" :key="appIndex" :app="app" @click-app="handleClickApp(app)" />
+        <WinApp v-for="(app, appIndex) in apps" :key="appIndex" :app="app" @click-app="handleClickApp(app)" />
     </div>
 </template>
 

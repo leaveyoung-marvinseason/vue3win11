@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { BAR_APPS } from '@/constants';
 import { inject } from 'vue';
-import App from '@/components/app/index.vue';
+import WinApp from '@/components/win-app/index.vue';
 import { useAppStore } from '@/store/app';
 import { AppProps } from '@/types/app';
 const { setSelectedApp } = useAppStore()
@@ -16,7 +16,7 @@ const handleClick = (barApp: AppProps) => {
 <template>
     <div class="h-12 bg-slate-50 opacity-80 flex items-center justify-center p-2">
         <div class="flex gap-1">
-            <App v-for="(barApp, index) in barApps" :size="28" :key="index" :app="barApp" @click-app="handleClick(barApp)" />
+            <WinApp v-for="(barApp, index) in barApps" :size="28" :key="index" :app="barApp" @click-app="handleClick(barApp)" />
         </div>
     </div>
 </template>
