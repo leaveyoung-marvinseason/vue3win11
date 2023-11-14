@@ -8,8 +8,8 @@ const {
   deleteDialog, 
   addDialog, 
   hideDialog, 
-  ÏshowDialogÏ,
-  focusDlalog
+  showDialog,
+  focusDialog
 }  = useDialogStore();
 
 ```
