@@ -2,26 +2,23 @@
   Author: marvin-season
   Created: 2023-11
 -->
-<script setup lang='ts'>
-import { NButton, NCard, NModal } from 'naive-ui';
-import { useAppStore } from '@/store/app';
-import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
-const appStore = useAppStore();
-const { selectedApp } = storeToRefs(appStore);
-const showDiglog = computed(() => !!selectedApp.value);
+<script setup lang="ts">
+import { DialogProps } from "@/types/dialog.ts";
+
+const props = defineProps<{
+  dialog: DialogProps
+}>();
+
 const handleClose = () => {
-    appStore.setSelectedApp(null)
-}
+
+};
 
 </script>
- 
+
 <template>
-    <NModal v-model:show="showDiglog">
-        <NCard>
-            <NButton @click="handleClose">{{ selectedApp?.label }}</NButton>
-        </NCard>
-    </NModal>
+  <div class="absolute w-6 h-10" :style="{zIndex: props.dialog.zIndex}">
+    {{ props.dialog.id }}
+  </div>
 </template>
- 
+
 <style scoped></style>

@@ -2,13 +2,20 @@
 import App from '@/components/app/index.vue';
 import { useAppStore } from '@/store/app';
 import { AppProps } from '@/types/app';
-import { APPS } from '@/constants';
+import { APPS, FOCUS_DIALOG_Z_INDEX } from "@/constants";
 import { inject } from 'vue';
+import { useDialogStore } from "@/store/dialog.ts";
 
 const { setSelectedApp } = useAppStore();
+const { addDialog } = useDialogStore();
 
 const handleClickApp = (app: AppProps) => {
-    setSelectedApp(app)
+  addDialog({
+    app,
+    hide: false,
+    id: app.id,
+    zIndex: FOCUS_DIALOG_Z_INDEX
+  })
 }
 
 const apps = inject(APPS)
