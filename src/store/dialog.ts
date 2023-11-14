@@ -3,6 +3,31 @@ import { ref } from "vue";
 import { DialogNodeType, DialogProps } from "@/types/dialog.ts";
 import { FOCUS_DIALOG_Z_INDEX, UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
 
+
+function findExistDialogById(id: number | string, dialogListHead: DialogNodeType) {
+  let pointer = dialogListHead;
+  while (pointer.next) {
+    if (pointer.next.id == id) {
+      return { pointer, target: pointer.next };
+    }
+    pointer = pointer.next;
+  }
+  return {
+    pointer, target: pointer.next
+  };
+}
+
+function updateZIndex(dialogs: DialogProps[], dialog: DialogProps) {
+  return dialogs.map((item) => {
+    if (item.id == dialog.id) {
+      item.zIndex = FOCUS_DIALOG_Z_INDEX;
+    } else {
+      item.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
+    }
+    return item;
+  });
+}
+
 export const useDialogStore = defineStore("dialog", () => {
   // all dialogs
   const dialogs = ref<DialogProps[]>([]);
@@ -19,14 +44,6 @@ export const useDialogStore = defineStore("dialog", () => {
       dialogs.value?.push(dialog);
     }
 
-    dialogs.value.forEach(item => {
-      if (item.id == dialog.id) {
-        item.zIndex = FOCUS_DIALOG_Z_INDEX;
-      } else {
-        item.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
-      }
-    });
-
     focusDialog(dialog);
 
   };
@@ -37,24 +54,12 @@ export const useDialogStore = defineStore("dialog", () => {
   const hideDialog = ({ id }: DialogProps) => {
   };
 
-  function findExistDialogById(id: number | string) {
-    let pointer = dialogListHead;
-    while (pointer.next) {
-      if (pointer.next.id == id) {
-        return { pointer, target: pointer.next };
-      }
-      pointer = pointer.next;
-    }
-    return {
-      pointer, target: pointer.next
-    };
-  }
 
-  const focusDialog = ({ id }: DialogProps) => {
-    console.log("focus", id);
+  const focusDialog = (dialog: DialogProps) => {
 
+    dialogs.value = updateZIndex(dialogs.value, dialog);
     // find existed dialog in list
-    const { pointer: preTarget, target } = findExistDialogById(id);
+    const { pointer: preTarget, target } = findExistDialogById(dialog.id, dialogListHead);
 
     // if (dialogListHead.next) {
     //   dialogListHead.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
@@ -62,7 +67,7 @@ export const useDialogStore = defineStore("dialog", () => {
 
     if (!target) {
       dialogListHead.next = {
-        id,
+        id: dialog.id,
         // zIndex: FOCUS_DIALOG_Z_INDEX,
         next: dialogListHead.next
       };

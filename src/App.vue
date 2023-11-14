@@ -11,6 +11,7 @@ import { storeToRefs } from "pinia";
 import { useDialogStore } from "@/store/dialog.ts";
 
 const { dialogs } = storeToRefs(useDialogStore());
+const { focusDialog} = useDialogStore()
 
 const { isLogin } = storeToRefs(useAuthStore());
 </script>
@@ -35,6 +36,6 @@ const { isLogin } = storeToRefs(useAuthStore());
     </Layer>
 
     <!-- app弹窗 -->
-    <AppDialog :dialog="dialog" v-for="dialog in dialogs" :key="dialog.id" />
+    <AppDialog @click="focusDialog" :dialog="dialog" v-for="dialog in dialogs" :key="dialog.id" />
   </div>
 </template>
