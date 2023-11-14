@@ -50,6 +50,20 @@ export const useDialogStore = defineStore("dialog", () => {
   const updateDialog = ({ id }: DialogProps) => {
   };
   const deleteDialog = ({ id }: DialogProps) => {
+    console.log('deleteDialog');
+    const index = dialogs.value.findIndex(item => item.id == id);
+    if (index <= -1) {
+      alert(`弹窗${id}关闭失败`);
+      return;
+    }
+
+    dialogs.value = dialogs.value.filter(item => item.id != id);
+    const { pointer: preTarget, target } = findExistDialogById(id, dialogListHead);
+    if (!target) {
+      return;
+    } else {
+      preTarget.next = target.next;
+    }
   };
   const hideDialog = ({ id }: DialogProps) => {
   };
