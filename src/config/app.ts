@@ -22,14 +22,19 @@ export const apps: AppProps[] = [
 ]
 
 export const barApps: AppProps[] = [
-    {
-        id: 1,
-        label: '',
-        icon: 'store',
-    },
-    {
-        id: 2,
-        label: '',
-        icon: 'explorer',
-    },
-] 
+  {
+    id: 1,
+    label: "",
+    icon: "icon-AI",
+  },
+  {
+    id: 2,
+    label: "",
+    icon: "icon-WeChat",
+  },
+  {
+    id: 2,
+    label: "",
+    icon: "icon-Terminal",
+  },
+]; 
