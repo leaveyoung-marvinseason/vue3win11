@@ -62,26 +62,40 @@ export class DialogLinkedList {
     return null;
   }
 
-  adjustSpecTarget(pointer: DialogNode, target: DialogNode) {
-    const header = this.headerNode;
-    pointer.next = target.next;
-    target.next = header.next;
-    header.next = target;
+  focusDialog(dialog?: DialogProps) {
+    this.focusAuto(dialog ?? this.headerNode.next);
   }
 
+  private focusAuto(dialog: DialogProps | null | undefined) {
+    if (!dialog) {
+      return;
+    }
 
-  focusAuto() {
     let header = this.headerNode;
-    let isReset = false;
+    // reset index,
     while (header.next) {
-      if (!isReset) {
-        header.next.zIndex = FOCUS_DIALOG_Z_INDEX;
-        isReset = true;
-      } else {
-        header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
+      header.next.zIndex == FOCUS_DIALOG_Z_INDEX && (header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX);
+      header = header.next;
+    }
+
+    header = this.headerNode;
+    while (header.next) {
+      if (header.next.id === dialog.id) {
+        //
+        let target = header.next;
+        header.next = target.next;
+        target.next = this.headerNode.next;
+        this.headerNode.next = target;
+        break;
       }
       header = header.next;
     }
+
+    header = this.headerNode;
+    if (header.next) {
+      header.next.zIndex = FOCUS_DIALOG_Z_INDEX;
+    }
+
   }
 
   toList() {
