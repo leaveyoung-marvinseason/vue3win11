@@ -16,25 +16,12 @@ const emit = defineEmits<{
     click: []
 }>()
 
-const handleClick = () => emit('click')
-
-const lazyImage = ref(null)
-
-onBeforeMount(async () => {
-    try {
-        const dynamicImport = await import(`/src/statics/assets/images/icons/${props.name}.png`)
-        lazyImage.value = dynamicImport.default
-        console.log(lazyImage.value);
-    } catch (error) {
-        console.log(error);
-    }
-
-})
-
 </script>
  
 <template>
-    <NImage v-if="lazyImage" lazy preview-disabled @click="handleClick" :width="props.size" :height="props.size" :src="lazyImage"></NImage>
+  <svg :height="size" :width="size">
+    <use :xlink:href="`#${name}`" :height="size" :width="size"></use>
+  </svg>
 </template>
  
 <style scoped></style>

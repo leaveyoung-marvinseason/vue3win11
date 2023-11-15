@@ -24,7 +24,7 @@ const handleClick = () => {
 </script>
  
 <template>
-  <div class="flex w-20 flex-col items-center gap-2 inline-block">
+  <div class="flex w-20 flex-col items-center gap-2 inline-block ">
     <Icon class="cursor-pointer" @click="handleClick" :name="props.app.icon" :size="props.size"/>
     <span @click="handleClick" class="text-white text-xs break-all">{{ props.app.label }}</span>
   </div>
