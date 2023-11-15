@@ -57,37 +57,43 @@ export class DialogLinkedList {
   }
 
   focusDialog(dialog?: DialogProps) {
-    this.focusAuto(dialog ?? this.headerNode.next);
+    return this.focusAuto(dialog ?? this.headerNode.next);
   }
 
   private focusAuto(dialog: DialogProps | null | undefined) {
     if (!dialog) {
-      return;
+      return false;
     }
 
-    let header = this.headerNode;
-    // reset index,
-    while (header.next) {
-      header.next.zIndex == FOCUS_DIALOG_Z_INDEX && (header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX);
-      header = header.next;
-    }
-
-    header = this.headerNode;
-    while (header.next) {
-      if (header.next.id === dialog.id) {
-        //
-        let target = header.next;
-        header.next = target.next;
-        target.next = this.headerNode.next;
-        this.headerNode.next = target;
-        break;
+    try {
+      let header = this.headerNode;
+      // reset index,
+      while (header.next) {
+        header.next.zIndex == FOCUS_DIALOG_Z_INDEX && (header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX);
+        header = header.next;
       }
-      header = header.next;
-    }
 
-    header = this.headerNode;
-    if (header.next) {
-      header.next.zIndex = FOCUS_DIALOG_Z_INDEX;
+      header = this.headerNode;
+      while (header.next) {
+        if (header.next.id === dialog.id) {
+          //
+          let target = header.next;
+          header.next = target.next;
+          target.next = this.headerNode.next;
+          this.headerNode.next = target;
+          break;
+        }
+        header = header.next;
+      }
+
+      header = this.headerNode;
+      if (header.next) {
+        header.next.zIndex = FOCUS_DIALOG_Z_INDEX;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
     }
 
   }
@@ -111,7 +117,7 @@ export class DialogLinkedList {
     return this.toList().filter(item => item.hide);
   }
 
-  getUnHideList(){
+  getUnHideList() {
     return this.toList().filter(item => !item.hide);
   }
 }

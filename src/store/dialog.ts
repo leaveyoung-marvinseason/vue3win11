@@ -15,7 +15,7 @@ export const useDialogStore = defineStore("dialog", () => {
 
   const hideDialogs = computed(() => {
     return dialogMaintainer.value.getHideList();
-  })
+  });
 
   const openDialog = (dialog: DialogProps) => {
     const isExist = dialogMaintainer.value.isExist(dialog.id);
@@ -26,23 +26,20 @@ export const useDialogStore = defineStore("dialog", () => {
         next: null
       });
     }
-    const target = dialogMaintainer.value.peek(dialog.id);
-    if (target) target.hide = false;
-    focusDialog(dialog);
+    return showDialog(dialog) && focusDialog(dialog);
   };
 
   const closeDialog = (dialog: DialogProps) => {
     const isExist = dialogMaintainer.value.isExist(dialog.id);
     if (!isExist) {
       alert(`弹窗${dialog.id}关闭失败`);
-      return;
+      return false;
     }
-    dialogMaintainer.value.remove(dialog.id);
-    focusDialog();
+    return dialogMaintainer.value.remove(dialog.id) && focusDialog();
   };
 
   const clickDialog = (dialog: DialogProps) => {
-    focusDialog(dialog);
+    return focusDialog(dialog);
   };
   /**
    * 导致聚焦的因素: 打开弹窗、点击弹窗、关闭其他弹窗（自动聚焦一个弹窗）
@@ -50,9 +47,15 @@ export const useDialogStore = defineStore("dialog", () => {
    */
   const focusDialog = (dialog?: DialogProps) => {
     console.log("focus", dialog);
-    dialogMaintainer.value.focusDialog(dialog);
+    return dialogMaintainer.value.focusDialog(dialog);
   };
   const showDialog = (dialog: DialogProps) => {
+    const target = dialogMaintainer.value.peek(dialog.id);
+    if (target) {
+      target.hide = false;
+      return true;
+    }
+    return false;
   };
 
 
@@ -60,7 +63,11 @@ export const useDialogStore = defineStore("dialog", () => {
   };
   const hideDialog = (dialog: DialogProps) => {
     const target = dialogMaintainer.value.peek(dialog.id);
-    if (target) target.hide = true;
+    if (target) {
+      target.hide = true;
+      return true;
+    }
+    return false;
   };
 
 
