@@ -12,7 +12,8 @@ const { dialog } = defineProps<{
 
 const emit = defineEmits<{
   click: [DialogProps],
-  close: [DialogProps]
+  close: [DialogProps],
+  hide: [DialogProps]
 }>();
 
 const handleClose = (dialog: DialogProps) => {
@@ -22,6 +23,9 @@ const handleClose = (dialog: DialogProps) => {
 const handleClick = (dialog: DialogProps) => {
   emit("click", toRaw(dialog));
 };
+const handleHide = (dialog: DialogProps) => {
+  emit("hide", toRaw(dialog));
+};
 
 </script>
 
@@ -29,6 +33,7 @@ const handleClick = (dialog: DialogProps) => {
   <div class="absolute w-60 h-60 bg-amber-300 opacity-60" @click="handleClick(dialog)"
        :style="{zIndex: dialog.zIndex ?? 10, left: dialog.left + 'px', top: dialog.top + 'px'}">
     <button @click="handleClose(dialog)">close</button>
+    <button @click="handleHide(dialog)">hide</button>
     {{ dialog.id }}
   </div>
 </template>
