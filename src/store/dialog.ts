@@ -3,11 +3,12 @@ import { computed, ref } from "vue";
 import { DialogProps } from "@/types/dialog.ts";
 import { UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
 import { DialogLinkedList } from "@/class/DialogLinkedList.ts";
+import { IDialogList } from "@/class/IDialogList.ts";
 
 
 export const useDialogStore = defineStore("dialog", () => {
   // dialog list by click order
-  const dialogMaintainer = ref<DialogLinkedList>(new DialogLinkedList());
+  const dialogMaintainer = ref<IDialogList>(new DialogLinkedList());
 
   const dialogs = computed(() => {
     return dialogMaintainer.value.getUnHideList();
