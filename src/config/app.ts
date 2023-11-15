@@ -4,18 +4,18 @@ export const apps: AppProps[] = [
     {
         id: 1,
         label: '回收站',
-        icon: 'bin0',
+        icon: 'icon-huishouzhan',
         onClick: console.log
     },
     {
         id: 2,
-        icon: 'edge',
+        icon: 'icon-vscode',
         label: 'Edge',
         onClick: console.log
     },
     {
         id: 3,
-        icon: 'code',
+        icon: 'icon-a-MicrosoftEdge',
         label: 'Visual Studio Code',
         onClick: console.log
     },
