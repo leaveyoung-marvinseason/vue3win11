@@ -10,8 +10,12 @@ export const useDialogStore = defineStore("dialog", () => {
   const dialogMaintainer = ref<DialogLinkedList>(new DialogLinkedList());
 
   const dialogs = computed(() => {
-    return dialogMaintainer.value.toList();
+    return dialogMaintainer.value.getUnHideList();
   });
+
+  const hideDialogs = computed(() => {
+    return dialogMaintainer.value.getHideList();
+  })
 
   const openDialog = (dialog: DialogProps) => {
     const isExist = dialogMaintainer.value.isExist(dialog.id);
@@ -22,6 +26,8 @@ export const useDialogStore = defineStore("dialog", () => {
         next: null
       });
     }
+    const target = dialogMaintainer.value.peek(dialog.id);
+    if (target) target.hide = false;
     focusDialog(dialog);
   };
 
@@ -43,7 +49,7 @@ export const useDialogStore = defineStore("dialog", () => {
    * @param dialog
    */
   const focusDialog = (dialog?: DialogProps) => {
-    console.log('focus', dialog);
+    console.log("focus", dialog);
     dialogMaintainer.value.focusDialog(dialog);
   };
   const showDialog = (dialog: DialogProps) => {
@@ -53,6 +59,8 @@ export const useDialogStore = defineStore("dialog", () => {
   const updateDialog = (dialog: DialogProps) => {
   };
   const hideDialog = (dialog: DialogProps) => {
+    const target = dialogMaintainer.value.peek(dialog.id);
+    if (target) target.hide = true;
   };
 
 

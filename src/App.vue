@@ -12,7 +12,7 @@ import { useDialogStore } from "@/store/dialog.ts";
 import { toRaw } from "vue";
 
 const { dialogs } = storeToRefs(useDialogStore());
-const { clickDialog, closeDialog } = useDialogStore();
+const { clickDialog, closeDialog, hideDialog } = useDialogStore();
 
 const { isLogin } = storeToRefs(useAuthStore());
 </script>
@@ -37,6 +37,13 @@ const { isLogin } = storeToRefs(useAuthStore());
     </Layer>
 
     <!-- app弹窗 -->
-    <AppDialog @close="closeDialog" @click="clickDialog" :dialog="dialog" v-for="dialog in dialogs" :key="dialog.id" />
+    <AppDialog
+        @hide="hideDialog"
+        @close="closeDialog"
+        @click="clickDialog"
+        :dialog="dialog"
+        v-for="dialog in dialogs"
+        :key="dialog.id"
+    />
   </div>
 </template>

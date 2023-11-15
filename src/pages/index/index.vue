@@ -13,7 +13,9 @@ const handleClickApp = (app: AppProps) => {
   openDialog({
     id: app.id,
     left: random0_9() * 50,
-    top: random0_9() * 20
+    top: random0_9() * 20,
+    zIndex: -1,
+    hide: false,
   });
 };
 

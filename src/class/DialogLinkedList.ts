@@ -29,22 +29,16 @@ export class DialogLinkedList {
     return this.dialogSet.has(id);
   }
 
-  peek(id?: ID_TYPE) {
+  peek(id: ID_TYPE) {
     let header = this.headerNode;
     while (header.next) {
       if (header.next.id == id) {
-        return {
-          target: header.next,
-          pointer: header
-        };
+        return header.next;
       }
       header = header.next;
     }
 
-    return {
-      target: null,
-      pointer: header
-    };
+    return null;
   }
 
   remove(id: ID_TYPE) {
@@ -111,5 +105,13 @@ export class DialogLinkedList {
       header = header.next;
     }
     return nodeList;
+  }
+
+  getHideList() {
+    return this.toList().filter(item => item.hide);
+  }
+
+  getUnHideList(){
+    return this.toList().filter(item => !item.hide);
   }
 }
