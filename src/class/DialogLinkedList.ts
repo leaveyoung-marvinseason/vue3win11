@@ -1,6 +1,7 @@
 import { ID_TYPE } from "@/types";
 import { FOCUS_DIALOG_Z_INDEX, UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
 import { DialogProps } from "@/types/dialog.ts";
+import { AbstractDialogList } from "@/class/AbstractDialogList.ts";
 
 export class DialogNode implements DialogProps {
 
@@ -8,11 +9,12 @@ export class DialogNode implements DialogProps {
   }
 }
 
-export class DialogLinkedList {
+export class DialogLinkedList extends AbstractDialogList{
   private readonly dialogSet: Set<ID_TYPE>;
   private readonly headerNode: DialogNode;
 
   constructor() {
+    super();
     this.headerNode = new DialogNode(-1, null, -1, false);
     this.dialogSet = new Set();
   }
@@ -111,13 +113,5 @@ export class DialogLinkedList {
       header = header.next;
     }
     return nodeList;
-  }
-
-  getHideList() {
-    return this.toList().filter(item => item.hide);
-  }
-
-  getUnHideList() {
-    return this.toList().filter(item => !item.hide);
   }
 }

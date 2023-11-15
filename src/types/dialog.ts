@@ -13,6 +13,3 @@ export interface DialogProps {
   height?: number;
 }
 
-export type DialogNodeType = Pick<DialogProps, "id"> & {
-  next: DialogNodeType | null;
-}
