@@ -9,9 +9,10 @@ import { NImage } from "naive-ui";
 import { useAuthStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { useDialogStore } from "@/store/dialog.ts";
+import { toRaw } from "vue";
 
 const { dialogs } = storeToRefs(useDialogStore());
-const { focusDialog, deleteDialog } = useDialogStore()
+const { clickDialog, closeDialog } = useDialogStore();
 
 const { isLogin } = storeToRefs(useAuthStore());
 </script>
@@ -36,6 +37,6 @@ const { isLogin } = storeToRefs(useAuthStore());
     </Layer>
 
     <!-- app弹窗 -->
-    <AppDialog @close="deleteDialog" @click="focusDialog" :dialog="dialog" v-for="dialog in dialogs" :key="dialog.id" />
+    <AppDialog @close="closeDialog" @click="clickDialog" :dialog="dialog" v-for="dialog in dialogs" :key="dialog.id" />
   </div>
 </template>

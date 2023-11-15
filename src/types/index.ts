@@ -1,0 +1,1 @@
+export type ID_TYPE = string | number

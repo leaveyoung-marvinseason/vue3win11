@@ -1,10 +1,11 @@
 import { AppProps } from "@/types/app.ts";
+import { ID_TYPE } from "@/types/index.ts";
 
 export interface DialogProps {
-  id: string | number;
-  hide: boolean;
+  id: ID_TYPE;
+  hide?: boolean;
   zIndex?: number;
-  app: AppProps;
+  app?: AppProps;
   // 弹窗位置大小
   left?: number;
   top?: number;

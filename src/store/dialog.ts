@@ -1,112 +1,75 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
-import { DialogNodeType, DialogProps } from "@/types/dialog.ts";
-import { FOCUS_DIALOG_Z_INDEX, UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
+import { computed, ref } from "vue";
+import { DialogProps } from "@/types/dialog.ts";
+import { UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
+import { DialogLinkedList } from "@/class/DialogLinkedList.ts";
 
-
-function findExistDialogById(id: number | string, dialogListHead: DialogNodeType) {
-  let pointer = dialogListHead;
-  while (pointer.next) {
-    if (pointer.next.id == id) {
-      return { pointer, target: pointer.next };
-    }
-    pointer = pointer.next;
-  }
-  return {
-    pointer, target: pointer.next
-  };
-}
-
-function updateZIndex(dialogs: DialogProps[], dialog: DialogProps) {
-  return dialogs.map((item) => {
-    if (item.id == dialog.id) {
-      item.zIndex = FOCUS_DIALOG_Z_INDEX;
-    } else {
-      item.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
-    }
-    return item;
-  });
-}
 
 export const useDialogStore = defineStore("dialog", () => {
-  // all dialogs
-  const dialogs = ref<DialogProps[]>([]);
   // dialog list by click order
-  const dialogListHead: DialogNodeType = {
-    id: -1,
-    next: null
-  };
-  const addDialog = (dialog: DialogProps) => {
-    const targetIndex = dialogs.value?.findIndex(item => item.id == dialog.id);
+  const dialogMaintainer = ref<DialogLinkedList>(new DialogLinkedList());
 
+  const dialogs = computed(() => {
+    return dialogMaintainer.value.toList();
+  });
 
-    if (targetIndex < 0) {
-      dialogs.value?.push(dialog);
+  const openDialog = (dialog: DialogProps) => {
+    const isExist = dialogMaintainer.value.isExist(dialog.id);
+
+    if (!isExist) {
+      dialogMaintainer.value.add({
+        ...dialog,
+        next: null
+      });
     }
-
     focusDialog(dialog);
+  };
 
-  };
-  const updateDialog = ({ id }: DialogProps) => {
-  };
-  const deleteDialog = ({ id }: DialogProps) => {
-    console.log('deleteDialog');
-    const index = dialogs.value.findIndex(item => item.id == id);
-    if (index <= -1) {
-      alert(`弹窗${id}关闭失败`);
+  const closeDialog = (dialog: DialogProps) => {
+    focusDialog(dialog);
+    const isExist = dialogMaintainer.value.isExist(dialog.id);
+    if (!isExist) {
+      alert(`弹窗${dialog.id}关闭失败`);
       return;
     }
+    dialogMaintainer.value.remove(dialog.id);
+    focusDialog();
+  };
 
-    dialogs.value = dialogs.value.filter(item => item.id != id);
-    const { pointer: preTarget, target } = findExistDialogById(id, dialogListHead);
-    if (!target) {
-      return;
-    } else {
-      preTarget.next = target.next;
+  const clickDialog = (dialog: DialogProps) => {
+    focusDialog(dialog);
+  };
+  /**
+   * 导致聚焦的因素: 打开弹窗、点击弹窗、关闭其他弹窗（自动聚焦一个弹窗）
+   * @param dialog
+   */
+  const focusDialog = (dialog?: DialogProps) => {
+    const { pointer, target } = dialogMaintainer.value.peek(dialog?.id);
+    // focus dialog by target
+    if (target) {
+      dialogMaintainer.value.adjustSpecTarget(pointer, target);
     }
+    dialogMaintainer.value.focusAuto();
   };
-  const hideDialog = ({ id }: DialogProps) => {
+  const showDialog = (dialog: DialogProps) => {
   };
 
 
-  const focusDialog = (dialog: DialogProps) => {
-
-    dialogs.value = updateZIndex(dialogs.value, dialog);
-    // find existed dialog in list
-    const { pointer: preTarget, target } = findExistDialogById(dialog.id, dialogListHead);
-
-    // if (dialogListHead.next) {
-    //   dialogListHead.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
-    // }
-
-    if (!target) {
-      dialogListHead.next = {
-        id: dialog.id,
-        // zIndex: FOCUS_DIALOG_Z_INDEX,
-        next: dialogListHead.next
-      };
-    } else {
-      // target.zIndex = FOCUS_DIALOG_Z_INDEX;
-
-      preTarget.next = target.next;
-      target.next = dialogListHead.next;
-      dialogListHead.next = target;
-
-    }
-
-    console.log("dialogListHead", dialogListHead);
+  const updateDialog = (dialog: DialogProps) => {
   };
-  const showDialog = ({ id }: DialogProps) => {
+  const hideDialog = (dialog: DialogProps) => {
   };
+
 
   return {
     dialogs,
     updateDialog,
-    deleteDialog,
-    addDialog,
+    closeDialog,
+    openDialog,
+    addDialog: openDialog,
     hideDialog,
     showDialog,
-    focusDialog
+    clickDialog
   };
 
 });
