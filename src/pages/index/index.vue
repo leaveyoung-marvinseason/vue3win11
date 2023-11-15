@@ -2,20 +2,16 @@
 import WinApp from "@/components/win-app/index.vue";
 import { useAppStore } from "@/store/app";
 import { AppProps } from "@/types/app";
-import { APPS, FOCUS_DIALOG_Z_INDEX } from "@/constants";
+import { APPS } from "@/constants";
 import { inject } from "vue";
 import { useDialogStore } from "@/store/dialog.ts";
 import { random0_9 } from "@/utils";
 
-const { setSelectedApp } = useAppStore();
-const { addDialog } = useDialogStore();
+const { openDialog } = useDialogStore();
 
 const handleClickApp = (app: AppProps) => {
-  addDialog({
-    app,
-    hide: false,
+  openDialog({
     id: app.id,
-    zIndex: FOCUS_DIALOG_Z_INDEX,
     left: random0_9() * 50,
     top: random0_9() * 20
   });
