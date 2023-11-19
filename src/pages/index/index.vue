@@ -16,16 +16,21 @@ const handleClickApp = (app: AppProps) => {
     top: random0_9() * 20,
     zIndex: -1,
     hide: false,
+    app,
   });
 };
 
 const apps = inject(APPS);
-
 </script>
 
 <template>
   <div class="h-full flex flex-col gap-4 p-2 pt-4 pb-4">
-    <WinApp v-for="(app, appIndex) in apps" :key="appIndex" :app="app" @click-app="handleClickApp(app)" />
+    <WinApp
+      v-for="(app, appIndex) in apps"
+      :key="appIndex"
+      :app="app"
+      @click-app="handleClickApp(app)"
+    />
   </div>
 </template>
 
