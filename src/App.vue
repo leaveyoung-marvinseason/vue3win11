@@ -22,7 +22,7 @@ const { isLogin } = storeToRefs(useAuthStore());
     <!-- 背景层 -->
     <Layer :z-index="8">
       <template v-slot>
-        <NImage :src="isLogin ? loginBg : unLoginBg" />
+        <NImage height="100%" :src="isLogin ? loginBg : unLoginBg" />
       </template>
     </Layer>
     <!-- 应用入口层 -->
