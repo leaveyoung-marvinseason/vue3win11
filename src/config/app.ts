@@ -1,4 +1,5 @@
-import { AppProps } from "@/types/app";
+import { AppProps, BarAppProps } from "@/types/app";
+import { AppAction } from "@/types";
 
 export const apps: AppProps[] = [
   {
@@ -26,6 +27,7 @@ export const apps: AppProps[] = [
 
 export const barApps: AppProps[] = [
   {
+    action: AppAction.A1,
     id: 1,
     label: "",
     name: "ai",
