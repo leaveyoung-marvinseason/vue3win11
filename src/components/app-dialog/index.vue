@@ -5,17 +5,14 @@
 <script setup lang="ts">
 import {DialogProps} from "@/types/dialog.ts";
 import {nextTick, onMounted, reactive, ref, Ref, toRaw, unref} from "vue";
+import {useDialogStore} from "@/store/dialog.ts";
+const { updateDialog } = useDialogStore();
+import {NButtonGroup, NButton} from "naive-ui";
+import icon from '@/components/icon/index.vue'
 
 const {dialog} = defineProps<{
   dialog: DialogProps
 }>();
-// const dialog = reactive({
-//   id: 'test',
-//   hide: false,
-//   zIndex: 20,
-//   left: 20,
-//   top: 20
-// })
 
 const emit = defineEmits<{
   click: [DialogProps],
@@ -41,12 +38,10 @@ const offsetX = ref(0)
 const offsetY = ref(0)
 const dialogBox = ref(null)
 // 鼠标按下时开始拖拽
-const startDrag = (event:any) => {
+const startDrag = (event: any) => {
   isDragging.value = true;
   offsetX.value = event.clientX - dialog.left;
   offsetY.value = event.clientY - dialog.top;
-  // offsetX.value = Number(window.getComputedStyle(unref(dialogBox), null).getPropertyValue('left').split("px")[0])
-  // offsetX.value = Number(window.getComputedStyle(unref(dialogBox), null).getPropertyValue('left').split("px")[0])
 
   // 添加mousemove和mouseup事件监听
   document.addEventListener('mousemove', handleDrag);
@@ -54,22 +49,17 @@ const startDrag = (event:any) => {
 };
 
 // 鼠标移动时拖拽元素
-const handleDrag = (event:any) => {
-  if (isDragging && unref(dialogBox) != null) {
+const handleDrag = (event: any) => {
+  if (isDragging && unref(dialogBox)) {
     dialog.left = event.clientX - unref(offsetX);
     dialog.top = event.clientY - unref(offsetY);
 
     // 限制元素不超出可视区域
-    const maxX = window.innerWidth - 30; // 假设可视区域宽度为窗口宽度减去100
-    const maxY = window.innerHeight - 30; // 假设可视区域高度为窗口高度减去100
+    const maxX = window.innerWidth - 20;
+    const maxY = window.innerHeight - 20;
     dialog.left = Math.min(maxX, Math.max(0, dialog.left));
-    if (dialog.left > window.innerWidth - unref(dialogBox).clientWidth - 5) {
-      dialog.left = window.innerWidth - unref(dialogBox).clientWidth - 5
-    }
     dialog.top = Math.min(maxY, Math.max(0, dialog.top));
-    if (dialog.top > window.innerHeight - unref(dialogBox).clientHeight - 5) {
-      dialog.top = window.innerHeight - unref(dialogBox).clientHeight - 5
-    }
+    updateDialog(dialog)
   }
 };
 
@@ -81,24 +71,33 @@ const stopDrag = () => {
 }
 
 onMounted(() => {
-
-  const resizableDiv = document.getElementById(String(dialog.id));
+  const resizableDiv = document.getElementById('dialog_' + String(dialog.id));
 
   let isResizing = false;
-  let currentHandle : String | null;
-  const resize_list = ['resize-lt', 'resize-t', 'resize-l', "resize-lb", "resize-b", "resize-rb", "resize-r"]
+  let currentHandle: String | null;
+  let minHeight = 100;
+  let minWidth = 100;
+  const resize_list = ['resize-lt', 'resize-t', 'resize-l', "resize-lb", "resize-b", "resize-rb", "resize-r"];
   resize_list.forEach((id) => {
     const resize_handle = document.getElementById(id)
     resize_handle?.addEventListener('mousedown', (e) => {
       isResizing = true;
+      if (resizableDiv) {
+        //设置鼠标样式
+        resizableDiv.style.cursor = window.getComputedStyle(resize_handle, null).cursor
+      }
       currentHandle = id.split('-')[1];
-      e.stopPropagation()
+      e.stopPropagation();
     })
   })
 
-  document.addEventListener('mousemove', (e) => {
+  document.onmousemove = function (e) {
     if (!isResizing) return;
     if (!resizableDiv) return;
+    // 限制鼠标不超出可视区域
+    const maxX = window.innerWidth - 30;
+    const maxY = window.innerHeight - 30;
+
     if (currentHandle) {
       let x = e.clientX
       let y = e.clientY
@@ -106,42 +105,51 @@ onMounted(() => {
       let offsetLeft = resizableDiv.getBoundingClientRect().left
       let offsetTop = resizableDiv.getBoundingClientRect().top
       let offsetBottom = resizableDiv.getBoundingClientRect().bottom
+
       if (currentHandle === 'r' && resizableDiv) {
-        resizableDiv.style.width = Math.floor(x- offsetLeft) + 'px';
+        resizableDiv.style.width = (Math.floor(x - offsetLeft) >= minWidth ? Math.floor(x - offsetLeft) : minWidth) + 'px';
       } else if (currentHandle === 'b' && resizableDiv) {
-        resizableDiv.style.height = y - offsetTop + 'px';
+        resizableDiv.style.height = (Math.floor(y - offsetTop) >= minHeight ? Math.floor(y - offsetTop) : minHeight) + 'px';
       } else if (currentHandle === 'l' && resizableDiv) {
-        resizableDiv.style.left = x + 'px';
-        resizableDiv.style.width = offsetRight - x + 'px';
+        dialog.left = (Math.floor(offsetRight - x) >= minWidth ? x : (offsetRight - minWidth));
+        updateDialog(dialog)
+        resizableDiv.style.width = (Math.floor(offsetRight - x) >= minWidth ? Math.floor(offsetRight - x) : minWidth) + 'px';
       } else if (currentHandle === 't' && resizableDiv) {
-        resizableDiv.style.top = y + 'px';
-        resizableDiv.style.height = offsetBottom - y + 'px';
-      }else if(currentHandle === 'lt' && resizableDiv){
-        resizableDiv.style.top = y + 'px';
-        resizableDiv.style.height = offsetBottom - y + 'px';
-        resizableDiv.style.left = x + 'px';
-        resizableDiv.style.width = offsetRight - x + 'px';
-      }else if(currentHandle === 'lb' && resizableDiv){
-        resizableDiv.style.left = x + 'px';
-        resizableDiv.style.width = offsetRight - x + 'px';
-        resizableDiv.style.height = y - offsetTop + 'px';
-      }else if(currentHandle === 'rb' && resizableDiv){
-        resizableDiv.style.width = x- offsetLeft + 'px';
-        resizableDiv.style.height = y - offsetTop + 'px';
+        dialog.top = (offsetBottom - y >= minHeight ? y : (offsetBottom - minHeight));
+        updateDialog(dialog)
+        resizableDiv.style.height = (offsetBottom - y >= minHeight ? offsetBottom - y : minHeight) + 'px';
+      } else if (currentHandle === 'lt' && resizableDiv) {
+        dialog.top = (offsetBottom - y >= minHeight ? y : (offsetBottom - minHeight));
+        resizableDiv.style.height = (offsetBottom - y >= minHeight ? offsetBottom - y : minHeight) + 'px';
+        dialog.left = (Math.floor(offsetRight - x) >= minWidth ? x : (offsetRight - minWidth));
+        resizableDiv.style.width = (Math.floor(offsetRight - x) >= minWidth ? Math.floor(offsetRight - x) : minWidth) + 'px';
+        updateDialog(dialog)
+      } else if (currentHandle === 'lb' && resizableDiv) {
+        dialog.left = (Math.floor(offsetRight - x) >= minWidth ? x : (offsetRight - minWidth));
+        resizableDiv.style.width = (Math.floor(offsetRight - x) >= minWidth ? Math.floor(offsetRight - x) : minWidth) + 'px';
+        resizableDiv.style.height = (y - offsetTop >= minHeight ? y - offsetTop : minHeight) + 'px';
+        updateDialog(dialog)
+      } else if (currentHandle === 'rb' && resizableDiv) {
+        resizableDiv.style.width = (Math.floor(x - offsetLeft) >= minWidth ? Math.floor(x - offsetLeft) : minWidth) + 'px';
+        resizableDiv.style.height = (y - offsetTop >= minHeight ? y - offsetTop : minHeight) + 'px';
       }
     }
-  });
+  };
 
   document.addEventListener('mouseup', () => {
     isResizing = false;
     currentHandle = null;
+    if (resizableDiv) {
+      //还原鼠标样式
+      resizableDiv.style.cursor = 'auto'
+    }
   });
 })
 
 </script>
 <template>
-  <div :id="String(dialog.id)" @click="handleClick(dialog)" @mousedown="startDrag" ref="dialogBox"
-       class="absolute h-4/5 w-[70%] bg-white rounded-xl border-2 border-[#6f6f6f30] transition-all overflow-visible shadow-[2px_2px_5px_0_rgba(0,0,0,0.3)] shadow-[#22222230] z-30"
+  <div :id="'dialog_' + String(dialog.id)" @click="handleClick(dialog)" @mousedown="startDrag" ref="dialogBox"
+       class="absolute h-4/5 w-[70%] bg-white rounded-xl border-2 border-[#6f6f6f30] overflow-visible shadow-[2px_2px_5px_0_rgba(0,0,0,0.3)] shadow-[#22222230] z-30"
        v-show="!dialog.hide" :style="{zIndex: dialog.zIndex ?? 10, left: dialog.left + 'px', top: dialog.top + 'px'}">
     <div class="resize-bar top">
       <div class="flex">
@@ -162,7 +170,18 @@ onMounted(() => {
         <div id="resize-b" class="cursor-ns-resize w-full h-[10px]"></div>
       </div>
     </div>
-
+    <n-button-group class="absolute top-0 right-0">
+      <n-button quaternary>
+        <icon name="icon-Hide-copy" :size="20" ></icon>
+      </n-button>
+      <n-button quaternary>
+        <icon name="icon-rectangle" :size="20"></icon>
+      </n-button>
+      <n-button quaternary>
+        <icon name="icon-icon_wrong" :size="20"></icon>
+      </n-button>
+    </n-button-group>
+<!--    <slot class="absolute"></slot>-->
   </div>
 </template>
 
