@@ -61,6 +61,13 @@ export const useDialogStore = defineStore("dialog", () => {
 
 
   const updateDialog = (dialog: DialogProps) => {
+    const target = dialogMaintainer.value.peek(dialog.id);
+    if (target) {
+      target.left = dialog.left
+      target.top = dialog.top
+      return true
+    }
+    return false
   };
   const hideDialog = (dialog: DialogProps) => {
     const target = dialogMaintainer.value.peek(dialog.id);
