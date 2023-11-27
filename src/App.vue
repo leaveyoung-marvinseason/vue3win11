@@ -10,6 +10,7 @@ import { useAuthStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { useDialogStore } from "@/store/dialog.ts";
 import { toRaw } from "vue";
+import icon from '@/components/icon/index.vue'
 
 const { dialogs } = storeToRefs(useDialogStore());
 const { clickDialog, closeDialog, hideDialog } = useDialogStore();
@@ -45,6 +46,7 @@ const { isLogin } = storeToRefs(useAuthStore());
         v-for="dialog in dialogs"
         :key="dialog.id"
     >
+
     </AppDialog>
   </div>
 </template>
