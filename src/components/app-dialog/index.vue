@@ -9,6 +9,7 @@ import {useDialogStore} from "@/store/dialog.ts";
 const { updateDialog } = useDialogStore();
 import {NButtonGroup, NButton} from "naive-ui";
 import icon from '@/components/icon/index.vue'
+import DynamicComp from '@/win-apps/index/index.vue'
 
 const {dialog} = defineProps<{
   dialog: DialogProps
@@ -148,8 +149,8 @@ onMounted(() => {
 
 </script>
 <template>
-  <div :id="'dialog_' + String(dialog.id)" @click="handleClick(dialog)" @mousedown="startDrag" ref="dialogBox"
-       class="absolute h-4/5 w-[70%] bg-white rounded-xl border-2 border-[#6f6f6f30] overflow-visible shadow-[2px_2px_5px_0_rgba(0,0,0,0.3)] shadow-[#22222230] z-30"
+  <div :id="'dialog_' + String(dialog.id)" @click="handleClick(dialog)" ref="dialogBox"
+       class="absolute h-4/5 w-[70%] bg-white rounded-xl border-2 border-[#6f6f6f30] overflow-visible shadow-[2px_2px_5px_0_rgba(0,0,0,0.3)] shadow-[#22222230] z-30 p-1"
        v-show="!dialog.hide" :style="{zIndex: dialog.zIndex ?? 10, left: dialog.left + 'px', top: dialog.top + 'px'}">
     <div class="resize-bar top">
       <div class="flex">
@@ -170,18 +171,25 @@ onMounted(() => {
         <div id="resize-b" class="cursor-ns-resize w-full h-[10px]"></div>
       </div>
     </div>
-    <n-button-group class="absolute top-0 right-0">
-      <n-button quaternary>
-        <icon name="icon-Hide-copy" :size="20" ></icon>
-      </n-button>
-      <n-button quaternary>
-        <icon name="icon-rectangle" :size="20"></icon>
-      </n-button>
-      <n-button quaternary>
-        <icon name="icon-icon_wrong" :size="20"></icon>
-      </n-button>
-    </n-button-group>
-<!--    <slot class="absolute"></slot>-->
+    <div class="absolute flex top-0 left-0 w-full">
+      <div @mousedown="startDrag" class="h-[34px] grow"></div>
+      <n-button-group>
+        <n-button quaternary @click="handleHide(dialog)">
+          <icon name="icon-Hide-copy" :size="20" ></icon>
+        </n-button>
+        <n-button quaternary>
+          <icon name="icon-rectangle" :size="20"></icon>
+        </n-button>
+        <n-button quaternary>
+          <icon name="icon-icon_wrong" @click="handleClose(dialog)" :size="20"></icon>
+        </n-button>
+      </n-button-group>
+    </div>
+    <div class="absolute top-0 left-0 h-[34px] ">
+      <slot></slot>
+    </div>
+
+    <DynamicComp :name="dialog.app.name" class="mt-[34px]" style="height: calc(100% - 34px)"></DynamicComp>
   </div>
 </template>
 
