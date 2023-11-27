@@ -11,6 +11,8 @@ import { useAuthStore } from "@/store";
 import { useRouter } from "vue-router";
 
 const { openDialog } = useDialogStore();
+const { logout } = useAuthStore();
+const router = useRouter();
 
 const barApps = inject(BAR_APPS);
 
@@ -43,7 +45,7 @@ const handleClick = (app: BarAppProps) => {
     v-model:show="active"
     :placement="placement"
   >
-    <NDrawerContent title="斯通纳">
+    <NDrawerContent title="">
       <div class="flex flex-col justify-between h-full">
         <div>
           <span>{{ currentApp }}</span>
@@ -56,10 +58,11 @@ const handleClick = (app: BarAppProps) => {
                 async () => {
                   console.log('aa');
                   try {
-                    await useAuthStore().logout();
-                    useRouter().back();
+                    await logout();
+                    await router.push({ path: '/' });
+                    console.log('aaa');
                   } catch (e) {
-                    console.log(e)
+                    console.log(e);
                   }
                 }
               "
