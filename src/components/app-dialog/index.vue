@@ -41,8 +41,8 @@ const dialogBox = ref(null)
 // 鼠标按下时开始拖拽
 const startDrag = (event: any) => {
   isDragging.value = true;
-  offsetX.value = event.clientX - dialog.left;
-  offsetY.value = event.clientY - dialog.top;
+  offsetX.value = event.clientX - (dialog?.left ?? 0);
+  offsetY.value = event.clientY - (dialog?.top ?? 0);
 
   // 添加mousemove和mouseup事件监听
   document.addEventListener('mousemove', handleDrag);
@@ -189,7 +189,7 @@ onMounted(() => {
       <slot></slot>
     </div>
 
-    <DynamicComp :name="dialog.app.name" class="mt-[34px]" style="height: calc(100% - 34px)"></DynamicComp>
+    <DynamicComp :name="dialog.app?.name ?? ''" class="mt-[34px]" style="height: calc(100% - 34px)"></DynamicComp>
   </div>
 </template>
 
