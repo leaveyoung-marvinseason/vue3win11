@@ -69,8 +69,11 @@ export class DialogLinkedList extends AbstractDialogList {
       let header = this.headerNode;
       // reset index,
       while (header.next) {
-        header.next.zIndex == FOCUS_DIALOG_Z_INDEX &&
-          (header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX);
+        if (header.next.zIndex == FOCUS_DIALOG_Z_INDEX) {
+          header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
+          break
+        }
+
         header = header.next;
       }
 
