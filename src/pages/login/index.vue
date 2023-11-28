@@ -7,7 +7,7 @@ const router = useRouter()
 const { login } = useAuthStore()
 const handleLogin = async () => {
   await login();
-  router.replace({
+  await router.replace({
     path: '/index'
   })
 }

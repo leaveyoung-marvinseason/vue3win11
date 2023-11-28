@@ -1,6 +1,5 @@
 import { IDialogList } from "@/class/IDialogList.ts";
-import { DialogProps } from "@/types/dialog.ts";
-import { DialogNode } from "@/class/DialogLinkedList.ts";
+import { DialogProps, DialogNode } from "@/types/dialog.ts";
 import { ID_TYPE } from "@/types";
 
 export abstract class AbstractDialogList implements IDialogList {

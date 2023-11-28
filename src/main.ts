@@ -5,11 +5,12 @@ import pinia from "@/store";
 import router from "@/router";
 import { APPS, BAR_APPS } from "./constants";
 import { apps, barApps } from "./config/app";
+import { AppProps, BarAppProps } from "@/types/app.ts";
 
 
 const app = createApp(App);
-app.provide(APPS, apps);
-app.provide(BAR_APPS, barApps);
+app.provide<AppProps[]>(APPS, apps);
+app.provide<BarAppProps[]>(BAR_APPS, barApps);
 
 app.use(router);
 app.use(pinia);

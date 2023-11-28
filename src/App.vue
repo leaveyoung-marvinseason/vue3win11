@@ -10,6 +10,7 @@ import { useAuthStore } from "@/store";
 import { storeToRefs } from "pinia";
 import { useDialogStore } from "@/store/dialog.ts";
 import { toRaw } from "vue";
+import icon from '@/components/icon/index.vue'
 
 const { dialogs } = storeToRefs(useDialogStore());
 const { clickDialog, closeDialog, hideDialog } = useDialogStore();
@@ -18,7 +19,7 @@ const { isLogin } = storeToRefs(useAuthStore());
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-screen">
+  <div class="relative flex flex-col w-full h-screen overflow-hidden">
     <!-- 背景层 -->
     <Layer :z-index="8">
       <template v-slot>
@@ -44,6 +45,8 @@ const { isLogin } = storeToRefs(useAuthStore());
         :dialog="dialog"
         v-for="dialog in dialogs"
         :key="dialog.id"
-    />
+    >
+
+    </AppDialog>
   </div>
 </template>
