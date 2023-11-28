@@ -65,6 +65,8 @@ export const useDialogStore = defineStore("dialog", () => {
     if (target) {
       target.left = dialog.left
       target.top = dialog.top
+      target.width = dialog.width
+      target.height = dialog.height
       return true
     }
     return false

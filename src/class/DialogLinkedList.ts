@@ -71,7 +71,7 @@ export class DialogLinkedList extends AbstractDialogList {
       while (header.next) {
         if (header.next.zIndex == FOCUS_DIALOG_Z_INDEX) {
           header.next.zIndex = UN_FOCUS_DIALOG_Z_INDEX;
-          break
+          break;
         }
 
         header = header.next;
@@ -107,13 +107,15 @@ export class DialogLinkedList extends AbstractDialogList {
     let header = this.headerNode;
 
     while (header.next) {
-      const { id, zIndex, hide, left, top, app } = header.next;
+      const { id, zIndex, hide, left, top, app, width, height } = header.next;
       nodeList.push({
         id,
         zIndex,
         hide,
         left,
         top,
+        width,
+        height,
         app: toRaw(app),
       });
 
