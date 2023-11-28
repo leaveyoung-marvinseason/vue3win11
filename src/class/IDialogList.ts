@@ -1,6 +1,5 @@
-import { DialogNode } from "@/class/DialogLinkedList.ts";
 import { ID_TYPE } from "@/types";
-import { DialogProps } from "@/types/dialog.ts";
+import { DialogProps, DialogNode } from "@/types/dialog.ts";
 
 export interface IDialogList {
 

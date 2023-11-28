@@ -77,6 +77,7 @@ export class DialogLinkedList extends AbstractDialogList {
         header = header.next;
       }
 
+      // reset index again!
       header = this.headerNode;
       while (header.next) {
         if (header.next.id === dialog.id) {
