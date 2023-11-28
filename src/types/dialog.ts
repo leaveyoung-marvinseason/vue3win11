@@ -13,3 +13,6 @@ export interface DialogProps {
   height?: number;
 }
 
+export type DialogNode = DialogProps & {
+  next: DialogNode | null;
+};

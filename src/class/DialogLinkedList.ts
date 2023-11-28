@@ -1,21 +1,8 @@
 import { ID_TYPE } from "@/types";
 import { FOCUS_DIALOG_Z_INDEX, UN_FOCUS_DIALOG_Z_INDEX } from "@/constants";
-import { DialogProps } from "@/types/dialog.ts";
+import { DialogProps, DialogNode } from "@/types/dialog.ts";
 import { AbstractDialogList } from "@/class/AbstractDialogList.ts";
-import { AppProps } from "@/types/app.ts";
 import { toRaw } from "vue";
-
-export class DialogNode implements DialogProps {
-  constructor(
-    public id: ID_TYPE,
-    public next?: DialogNode | null,
-    public zIndex?: number,
-    public hide?: boolean,
-    public left?: number,
-    public top?: number,
-    public app?: AppProps,
-  ) {}
-}
 
 export class DialogLinkedList extends AbstractDialogList {
   private readonly dialogSet: Set<ID_TYPE>;
@@ -23,7 +10,10 @@ export class DialogLinkedList extends AbstractDialogList {
 
   constructor() {
     super();
-    this.headerNode = new DialogNode(-1, null, -1, false);
+    this.headerNode = {
+      id: -1,
+      next: null,
+    };
     this.dialogSet = new Set();
   }
 
