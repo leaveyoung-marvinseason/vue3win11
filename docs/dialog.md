@@ -2,14 +2,15 @@
 
 ## store in `pinia`
 ```javascript
-const { 
+const {
   dialogs,
-  updateDialog, 
-  deleteDialog, 
-  addDialog, 
-  hideDialog, 
+  updateDialog,
+  closeDialog,
+  openDialog,
+  addDialog: openDialog,
+  hideDialog,
   showDialog,
-  focusDialog
+  clickDialog
 }  = useDialogStore();
 
 ```
@@ -22,7 +23,7 @@ const {
 点击app，弹窗
 ```javascript
 app.onclick = () => {
-  addDialog(
+  openDialog(
     {
       id: Date.now(),
       zIndex: 0,
@@ -35,11 +36,11 @@ app.onclick = () => {
 dialog操作
 ```javascript
 dialog.onclose = () => {
-  deleteDialog({id: 1})
+  closeDialog({id: 1})
 }
 
 dialog.onclick = () => {
-  focusDialog({id: 1});
+  clickDialog({id: 1});
 }
 
 dialog.onhide = () => {
@@ -47,7 +48,7 @@ dialog.onhide = () => {
 }
 
 dialog.onshow = () => {
-  hideDialog({id: 1});
+  showDialog({id: 1});
 }
 
 ```
