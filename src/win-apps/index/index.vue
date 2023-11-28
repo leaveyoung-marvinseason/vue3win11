@@ -6,16 +6,13 @@ const props = defineProps<{
 }>();
 
 const dynamicComp = defineAsyncComponent({
+  // @ts-ignore
   loader: async () => {
-    const url = props.name
-      ? /* @vite-ignore */
-        "../" + props.name + "/index.vue"
-      : "../exception/404.vue";
     try {
-      /* @vite-ignore */
-      const module = await import(url);
-      return module.default;
+      const modules = import.meta.glob("../**/*.vue");
+      return await modules[`../${props.name}/index.vue`].call(null);
     } catch (e) {
+      console.error(e, props.name);
       throw new Error("组件未注册");
     }
   },
